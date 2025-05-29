@@ -23,14 +23,13 @@ const HeroExperience = () => {
 
     return () => clearTimeout(timeout);
   }, []);
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowMe3(false);
-    }, 2300);
+    }, 1000);
     return () => clearTimeout(timeout);
   }, []);
-
+ 
   return (
     <>
       <Loader visible={showMe3} />
