@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.5.3 6830496941bfeee7cc1cfc12.glb -T
 Files: 6830496941bfeee7cc1cfc12.glb [983.98KB] > C:\Users\Lenovo\Desktop\html\portfoilo\mp\public\models\6830496941bfeee7cc1cfc12-transformed.glb [504.32KB] (49%)
 */
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { events, useGraph, useThree } from "@react-three/fiber";
 import { useAnimations, useFBX, useGLTF } from "@react-three/drei";
 import { SkeletonUtils } from "three-stdlib";
@@ -15,6 +15,15 @@ export function Mewa(props) {
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
   const group = useRef();
+  const [showMe, setShowMe] = useState(true);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowMe(false);
+    }, 3850);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   const { animations } = useFBX("models/Stop Walking.fbx");
   animations[0].name = "Dance";
@@ -56,7 +65,7 @@ export function Mewa(props) {
   }, [action.actions]);
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} {...props} dispose={null} visible={showMe}>
       <primitive object={nodes.Hips} />
       <skinnedMesh
         geometry={nodes.Wolf3D_Hair.geometry}
